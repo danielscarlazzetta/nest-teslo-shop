@@ -2,6 +2,11 @@
 /dist
 /node_modules
 
+#Evitar subir la base de datos a Git
+/postgres
+
+postgres/
+
 # Logs
 logs
 *.log
