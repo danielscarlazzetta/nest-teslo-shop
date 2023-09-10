@@ -2,9 +2,6 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
 
 ## Installation
 
@@ -39,4 +36,4 @@ docker-compose up
   utilizada en el .env, el usuario lo definimos como __"postgres"__
   y realizamos la conexion, de moento no se verqa nada ya que 
   la base de datos aun esta vacia.
-  
+
