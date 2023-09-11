@@ -44,7 +44,9 @@ docker-compose up
 npm i @nestjs/config
 ```
 Luego agregaremos en app.module.ts el siguiente codigo
-```ConfigModule.forRoot()```
+```bash
+ConfigModule.forRoot()
+```
 y lo siguiente
 ```bash
   TypeOrmModule.forRoot({
