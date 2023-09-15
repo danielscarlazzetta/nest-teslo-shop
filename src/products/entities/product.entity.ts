@@ -10,7 +10,7 @@ export class Product {
     @Column('text',{
         unique: true,
     })
-    title2: string;
+    title: string;
 
     @Column('numeric', {
         default: 0,

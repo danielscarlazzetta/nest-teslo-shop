@@ -68,3 +68,9 @@ npm install --save @nestjs/typeorm typeorm
 # para trabajar con typeORM agregar esto
 npm i pg 
 ```
+
+## Agregamos la validacion de clases
+
+```bash
+$ npm i class-validator class-transformer
+```
