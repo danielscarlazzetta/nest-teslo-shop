@@ -8,7 +8,7 @@ export class Product {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('text',{
+    @Column('text', {
         unique: true,
     })
     title: string;
@@ -47,17 +47,32 @@ export class Product {
     })
     gender: string;
 
-    //tag
+    @Column({
+        type: 'text',
+        array: true,
+        default: [],
+    })
+    tags: string[];
+
+
     //images
 
     @BeforeInsert()
-    checkSlugInsert(){
-        if( !this.slug ){
+    checkSlugInsert() { 
+        if (!this.slug) {
             this.slug = this.title;
         }
         this.slug = this.slug
-        .toLowerCase()
-        .replaceAll(' ', '')
-        .replaceAll("'", '');
+            .toLowerCase()
+            .replaceAll(' ', '')
+            .replaceAll("'", '');
+    }
+
+    @BeforeInsert()
+    checkSlugUpdate() {
+        this.slug = this.slug
+            .toLowerCase()
+            .replaceAll(' ', '')
+            .replaceAll("'", '');
     }
 }

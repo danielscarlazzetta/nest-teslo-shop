@@ -28,11 +28,11 @@ export class ProductsService {
     }
   }
 
-//Paginar
+  //Paginar
   findAll(paginationDTO: PaginationDTO) {
-    
-    const {limit = 10, offset = 0} = paginationDTO
-    
+
+    const { limit = 10, offset = 0 } = paginationDTO
+
     return this._productRepository.find({
       take: limit,
       skip: offset,
@@ -43,21 +43,40 @@ export class ProductsService {
 
     let product: Product;
 
-    if( isUUID(term) ){
-      product = await this._productRepository.findOneBy({id : term})
-    }else{
-      product = await this._productRepository.findOneBy({slug : term})
+    if (isUUID(term)) {
+      product = await this._productRepository.findOneBy({ id: term })
+    } else {
+      const queryBuilder = this._productRepository.createQueryBuilder();
+      product = await queryBuilder
+        .where(`UPPER(title) =:title or slug =:slug or tags =:tags`, {
+          title: term.toUpperCase(),
+          slug: term.toLowerCase(),
+          tags: term.toLowerCase(),
+        }).getOne();
     }
 
-    //const product = await this._productRepository.findOneBy({term});
-    
-    if(!product)
+    if (!product)
       throw new NotFoundException(`Producto con id ${term} no encontrado`);
     return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, updateProductDto: UpdateProductDto) {
+
+    const product = await this._productRepository.preload({
+      id: id,
+      ...updateProductDto,
+    });
+    if (!product) throw new NotFoundException(`El producto con el id ${id} no se encuentra`);
+
+    try {
+
+      await this._productRepository.save(product);
+      return product;
+
+    } catch (error) {
+      this.handleDBException(error);
+    }
+
   }
 
   async remove(id: string) {
