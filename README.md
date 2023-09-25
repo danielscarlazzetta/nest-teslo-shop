@@ -74,3 +74,15 @@ npm i pg
 ```bash
 $ npm i class-validator class-transformer
 ```
+
+## Agregamos UUID
+
+```bash
+$ npm i --save-dev @types/uuid
+```
+
+## Agregamos los tipos de UUID
+
+```bash
+$ npm i -D @types/uuid
+```

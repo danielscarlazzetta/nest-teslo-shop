@@ -1,9 +1,11 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
+import { PaginationDTO } from 'src/common/dtos/pagination.dto';
+import { validate as isUUID } from 'uuid'
 
 @Injectable()
 export class ProductsService {
@@ -26,20 +28,41 @@ export class ProductsService {
     }
   }
 
-  findAll() {
-    return `This action returns all products`;
+//Paginar
+  findAll(paginationDTO: PaginationDTO) {
+    
+    const {limit = 10, offset = 0} = paginationDTO
+    
+    return this._productRepository.find({
+      take: limit,
+      skip: offset,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(term: string) {
+
+    let product: Product;
+
+    if( isUUID(term) ){
+      product = await this._productRepository.findOneBy({id : term})
+    }else{
+      product = await this._productRepository.findOneBy({slug : term})
+    }
+
+    //const product = await this._productRepository.findOneBy({term});
+    
+    if(!product)
+      throw new NotFoundException(`Producto con id ${term} no encontrado`);
+    return product;
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const product = await this.findOne(id)
+    await this._productRepository.remove(product);
   }
 
   private handleDBException(err: any) {
