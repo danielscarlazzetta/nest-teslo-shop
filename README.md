@@ -24,7 +24,7 @@ $ npm run start:prod
 
 ## Configuracion de Docker-compose
 ```bash
-# Una vez creado el Docker-compose ejecutamos el siguiente comando
+# Una vez creado el Docker-compose ejecutamos el siguiente comando, si ocupamos el -d es para que no este enlazada a la terminal usada
 
 docker-compose up -d
  O

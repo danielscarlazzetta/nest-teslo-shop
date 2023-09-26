@@ -1,6 +1,7 @@
 import { text } from "stream/consumers";
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CreateProductDto } from "../dto/create-product.dto";
+import { ProductImage } from "./product-image.entity";
 
 @Entity()
 export class Product {
@@ -55,10 +56,19 @@ export class Product {
     tags: string[];
 
 
-    //images
+    @OneToMany(
+        () => ProductImage,
+        (producImage) => producImage.product,
+        {
+            cascade: true,
+            eager: true
+        }
+    )
+    images?: ProductImage[];
+
 
     @BeforeInsert()
-    checkSlugInsert() { 
+    checkSlugInsert() {
         if (!this.slug) {
             this.slug = this.title;
         }
