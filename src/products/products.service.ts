@@ -142,6 +142,18 @@ export class ProductsService {
 
   }
 
+  async deleteAllProduct() {
+    const query = this._productImagesRepository.createQueryBuilder('product');
+
+    try{
+      return await query
+      .delete()
+      .where({})
+      .execute();
+    }catch(err){
+      this.handleDBException(err);
+    }
+  }
   
 }
 
