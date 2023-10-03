@@ -31,6 +31,8 @@ docker-compose up -d
 docker-compose up
 ```
 
+
+
 ## Creamos una connecion a TablePlus despues de crear la imagen
   En este apartado es importante respertar la __"PASSWORD"__
   utilizada en el .env, el usuario lo definimos como __"postgres"__
@@ -85,4 +87,49 @@ $ npm i --save-dev @types/uuid
 
 ```bash
 $ npm i -D @types/uuid
+```
+
+
+## Postman
+
+```bash
+
+# Ejecutar SEED
+localhost:3000/api/seed
+
+# Get
+localhost:3000/api/products?limit=2&offset=1
+
+# Get
+localhost:3000/api/products
+
+# Get
+localhost:3000/api/products/0d0ebdf3-8efa-4313-8446-fb79d670e85c
+
+# Post
+localhost:3000/api/products
+{
+    "title": "Camisa",
+    "size": ["SM","M","L"],
+    "gender": "men",
+    "price": 300.99,
+    "images": [
+        "http://imagen7.jpg",
+        "http://imagen8.jpg",
+        "http://imagen9.jpg"
+    ]
+}
+
+# Patch
+localhost:3000/api/products/9a9329dc-712f-479f-8e1c-638409e19c93
+{
+    "price": 100,
+    "images": [
+        "https://imageeeeeen.jgp"
+    ]
+}
+
+# Delete
+localhost:3000/api/products/069a4a3f-3f58-4949-984d-5a44f6e215ba
+
 ```
