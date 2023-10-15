@@ -3,7 +3,7 @@ import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 
 import { CreateProductDto } from "../dto/create-product.dto";
 import { ProductImage } from "./product-image.entity";
 
-@Entity()
+@Entity( {name : 'Products'})
 export class Product {
 
     @PrimaryGeneratedColumn('uuid')
